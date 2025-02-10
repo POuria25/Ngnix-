@@ -105,8 +105,8 @@ http {
 }
  ```
 <br><br>
-`
+```
 worker_processes auto;
-`
-<br><br>
+```
+
 This sets the number of worker processes. auto means Nginx will automatically set it to the number of CPU cores available on the system.
