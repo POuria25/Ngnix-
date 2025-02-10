@@ -52,13 +52,20 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
   `sudo apt update ` <br>
   `sudo apt install nginx`  <br>
     <br> <br>
-🖥 On Windows: <br>
-Download the latest release from NGINX Official Site.
- <br> <br>
-2.2 Starting, Stopping, and Restarting NGINX <br>
-  
+  🖥 On Windows: <br>
+  Download the latest release from NGINX Official Site.
+   <br> <br>
+  2.2 Starting, Stopping, and Restarting NGINX <br>
   `sudo systemctl start nginx`  <br>
   `sudo systemctl stop nginx`  <br>
   `sudo systemctl restart nginx`  <br>
   `sudo systemctl reload nginx  # Reload without downtime` 
  <br> <br>
+
+  2.3 Exploring NGINX Directory Structure
+  
+  | Name      | Age | City    |
+  |-----------|-----|---------|
+  | John Doe  | 30  | New York|
+  | Jane Smith| 25  | London  |
+  | Peter Jones| 40  | Paris   |
