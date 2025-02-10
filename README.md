@@ -350,5 +350,136 @@ access_log /var/log/nginx/access.log main;
 
 
 
+## 📌 15. Advanced Load Balancing Strategies
+
+NGINX provides several **load balancing** methods to distribute traffic across backend servers efficiently. These strategies help optimize performance, reliability, and resource utilization.
+
+### ⚖️ **Types of Load Balancing in NGINX**
+1. **Round Robin (Default)** – Requests are distributed sequentially among backend servers.
+2. **Least Connections** – Requests are sent to the server with the fewest active connections.
+3. **IP Hash** – Ensures the same client IP is routed to the same backend server.
+4. **Weighted Load Balancing** – Some servers receive more requests than others.
+5. **Sticky Sessions (Session Persistence)** – Ensures requests from the same client always go to the same backend server.
+
+---
+
+### 🔄 **Round Robin Load Balancing (Default)**
+_NGINX automatically distributes requests among backend servers in a round-robin fashion._
+
+```nginx
+upstream backend {
+    server backend1.example.com;
+    server backend2.example.com;
+    server backend3.example.com;
+}
+
+server {
+    listen 80;
+    server_name example.com;
+
+    location / {
+        proxy_pass http://backend;
+    }
+}
+```
+
+### 📉 Least Connections Load Balancing
+Requests are sent to the backend server with the fewest active connections.
+```ngnix
+
+upstream backend {
+    least_conn;  # Enable Least Connections Load Balancing
+    server backend1.example.com;
+    server backend2.example.com;
+}
+
+server {
+    listen 80;
+    
+    location / {
+        proxy_pass http://backend;
+    }
+}
+```
+### 🔗 IP Hash Load Balancing
+Ensures that a client’s requests always go to the same backend server based on their IP.
+
+```ngnix
+upstream backend {
+    ip_hash;  # Enable IP Hash Load Balancing
+    server backend1.example.com;
+    server backend2.example.com;
+}
+
+server {
+    listen 80;
+    
+    location / {
+        proxy_pass http://backend;
+    }
+}
+```
+
+### ⚖️ Weighted Load Balancing
+You can assign higher weights to more powerful servers so they handle more traffic.
+
+``` ngnix
+
+upstream backend {
+    server backend1.example.com weight=3;  # This server gets more traffic
+    server backend2.example.com weight=1;  # Less traffic
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://backend;
+    }
+}
+```
+### 🔄 Sticky Sessions (Session Persistence)
+Ensures that a user always reaches the same backend server (useful for stateful applications).
+
+```ngnix
+upstream backend {
+    ip_hash;  # Sticky session using client IP
+    server backend1.example.com;
+    server backend2.example.com;
+}
+
+server {
+    listen 80;
+    
+    location / {
+        proxy_pass http://backend;
+    }
+}
+```
+### 📌 Load Balancing WebSockets & TCP Connections
+NGINX can also balance WebSockets and TCP traffic efficiently.
+```ngnix
+
+upstream websocket_backend {
+    server backend1.example.com:8080;
+    server backend2.example.com:8080;
+}
+
+server {
+    listen 80;
+
+    location /ws/ {
+        proxy_pass http://websocket_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+}
+```
+
+
+
+
+
 
 
