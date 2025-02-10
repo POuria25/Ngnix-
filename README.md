@@ -110,5 +110,27 @@ http {
 ```
 worker_processes auto;
 ```
-
 This sets the number of worker processes. auto means Nginx will automatically set it to the number of CPU cores available on the system.
+
+```
+events {
+    worker_connections 1024;
+}
+```
+worker_connections defines the maximum number of simultaneous connections each worker process can handle. In this case, each worker can handle up to 1024 connections.
+
+
+2. HTTP Block
+
+```
+http {
+    include mime.types;
+    sendfile on;
+    keepalive_timeout 65;
+```
+
+include mime.types; includes the MIME types file, which maps file extensions to MIME types (e.g., .html to text/html).
+
+sendfile on; enables the use of sendfile() system call, which is more efficient for serving static files.
+
+keepalive_timeout 65; sets the timeout for keep-alive connections to 65 seconds.
