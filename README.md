@@ -1,13 +1,11 @@
 # Ngnix
 
 
-📌 Introduction
-
-What is NGINX?
+📌 1. Introduction
 
 NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, load balancer, and caching system. It is widely used for handling concurrent connections efficiently due to its asynchronous, event-driven architecture.
 
-1. Why NGINX ?
+  Why NGINX ?
 
   NGINX was originally designed to solve the C10K problem, which refers to handling 10,000 concurrent connections efficiently. Traditional web servers like Apache use a thread-based   model, where each connection spawns a new thread, leading to high memory usage and CPU overhead. NGINX, however, is built around an event-driven model, allowing it to handle         thousands of concurrent connections efficiently with a small memory footprint.
 
@@ -22,7 +20,7 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
   
   ✅ Reverse Proxy – Hides backend servers and forwards requests.
 
-3. Key Features of NGINX 🚀 
+  Key Features of NGINX 🚀 
 
   Reverse Proxy: Acts as an intermediary between clients and backend servers. 
 
@@ -42,5 +40,25 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
 
   💡 Example: When you visit Airbnb, NGINX acts as a reverse proxy between your browser and the backend servers.
 
+📌 2. Installing and Running NGINX
 
-  
+  2.1 Installing NGINX
+  🖥 On macOS:
+   `
+   brew install nginx
+   `
+
+  🖥 On Linux (Ubuntu/Debian):
+  `sudo apt update
+   sudo apt install nginx
+   `
+🖥 On Windows:
+Download the latest release from NGINX Official Site.
+
+2.2 Starting, Stopping, and Restarting NGINX
+  `
+  sudo systemctl start nginx
+  sudo systemctl stop nginx
+  sudo systemctl restart nginx
+  sudo systemctl reload nginx  # Reload without downtime
+  `
