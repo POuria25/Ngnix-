@@ -238,8 +238,14 @@ error_log /var/log/nginx/error.log debug;
 
 ### Check NGINX Configuration
 ```sh
+nginx -V
 nginx -T
 ```
 
+### Viewing Logs
+```sh
+tail -f /var/log/nginx/access.log
+
+```
 This README now includes detailed explanations and relevant code snippets for each section. 🚀
 
