@@ -104,7 +104,8 @@ http {
     }
 }
  ```
-<br><br>
+<br>
+1. Global Configuration
 ```
 worker_processes auto;
 ```
