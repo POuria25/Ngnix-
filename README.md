@@ -40,7 +40,7 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
 
   💡 Example: When you visit Airbnb, NGINX acts as a reverse proxy between your browser and the backend servers.
 
-<br> <br>
+<br> <br> <br> 
 📌 2. Installing and Running NGINX
 
   2.1 Installing NGINX <br> <br>
@@ -72,3 +72,8 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
   | `/etc/nginx/sites-enabled/	` | Enabled virtual hosts   |
   | `/var/log/nginx/access.log	` | Access logs             |
   | `/var/log/nginx/error.log	 `  | Error logs              |
+
+  <br><br><br>
+
+  
+
