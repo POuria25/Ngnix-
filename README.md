@@ -76,4 +76,8 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
   <br><br><br>
 
   
+  📌 3. Understanding NGINX Configuration <br><br>
+  3.1 Directives and Contexts<br>
+  NGINX configuration consists of directives (key-value pairs) inside contexts (blocks of code).<br><br>
+  Example: Basic NGINX Config
 
