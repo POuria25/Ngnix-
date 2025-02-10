@@ -258,7 +258,7 @@ spec:
 ```
 ---
 
-## 📌 10. Security and Access Control
+## 📌 12. Security and Access Control
 
 ### Restricting Access
 
@@ -280,7 +280,7 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
 ---
 
-## 📌 12. Debugging and Logging
+## 📌 13. Debugging and Logging
 
 ### Enable Debugging Logs
 ```nginx
