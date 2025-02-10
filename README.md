@@ -43,15 +43,16 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
 📌 2. Installing and Running NGINX
 
   2.1 Installing NGINX
-  🖥 On macOS:
+  🖥 On macOS: <br>
    `
    brew install nginx
    `
-
-  🖥 On Linux (Ubuntu/Debian):
+   <br>
+  🖥 On Linux (Ubuntu/Debian): <br>
   `sudo apt update
    sudo apt install nginx
    `
+    <br>
 🖥 On Windows:
 Download the latest release from NGINX Official Site.
 
