@@ -385,7 +385,7 @@ server {
 
 ### 📉 Least Connections Load Balancing
 Requests are sent to the backend server with the fewest active connections.
-```ngnix
+```nginx
 
 upstream backend {
     least_conn;  # Enable Least Connections Load Balancing
@@ -404,7 +404,7 @@ server {
 ### 🔗 IP Hash Load Balancing
 Ensures that a client’s requests always go to the same backend server based on their IP.
 
-```ngnix
+```nginx
 upstream backend {
     ip_hash;  # Enable IP Hash Load Balancing
     server backend1.example.com;
@@ -441,7 +441,7 @@ server {
 ### 🔄 Sticky Sessions (Session Persistence)
 Ensures that a user always reaches the same backend server (useful for stateful applications).
 
-```ngnix
+```nginx
 upstream backend {
     ip_hash;  # Sticky session using client IP
     server backend1.example.com;
@@ -458,7 +458,7 @@ server {
 ```
 ### 📌 Load Balancing WebSockets & TCP Connections
 NGINX can also balance WebSockets and TCP traffic efficiently.
-```ngnix
+```nginx
 
 upstream websocket_backend {
     server backend1.example.com:8080;
