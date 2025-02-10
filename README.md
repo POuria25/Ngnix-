@@ -331,5 +331,24 @@ nginx -T
 tail -f /var/log/nginx/access.log
 
 ```
-This README now includes detailed explanations and relevant code snippets for each section. 🚀
+
+## 📌 14. Monitoring and Logging with NGINX
+
+- **Using NGINX Logs for Debugging**
+- **Logging Client Requests**
+- **Using `log_format` to Customize Logs**
+- **Analyzing Performance with Access Logs**
+
+#### Custom Log Format Example:
+```nginx
+log_format main '$remote_addr - $remote_user [$time_local] '
+                '"$request" $status $body_bytes_sent '
+                '"$http_referer" "$http_user_agent"';
+
+access_log /var/log/nginx/access.log main;
+```
+
+
+
+
 
