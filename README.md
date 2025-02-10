@@ -478,6 +478,47 @@ server {
 ```
 
 
+## 📌 16. WebSocket Support in NGINX
+
+### 🔹 What are WebSockets?
+WebSockets enable **full-duplex, real-time communication** between a client and a server over a **single TCP connection**. Unlike traditional HTTP requests, WebSockets **stay open**, reducing latency for real-time applications like **chat apps, stock tickers, and live notifications**.
+
+### 🔹 Why Use NGINX for WebSockets?
+- Acts as a **reverse proxy** for WebSockets.
+- Manages **connections efficiently**.
+- Provides **SSL termination** for secure WebSockets.
+- Load balances WebSocket connections.
+
+---
+
+### ⚙️ **Basic WebSocket Proxy Configuration**
+To support WebSockets, you need to configure **proxy headers** to handle `Upgrade` requests properly.
+
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+
+    location /ws/ {
+        proxy_pass http://backend_server;  # Forward requests to backend WebSocket server
+        proxy_http_version 1.1;            # WebSockets require HTTP/1.1
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+}
+
+```
+
+### 📌 Explanation:
+
+proxy_pass → Forwards WebSocket requests to the backend server.
+proxy_http_version 1.1 → Ensures WebSockets work properly.
+proxy_set_header Upgrade $http_upgrade; → Passes upgrade headers.
+proxy_set_header Connection "Upgrade"; → Maintains the WebSocket connection.
+
+
+
+
 
 
 
