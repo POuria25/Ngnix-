@@ -134,3 +134,26 @@ include mime.types; 👉🏻 includes the MIME types file, which maps file exten
 sendfile on; 👉🏻 enables the use of sendfile() system call, which is more efficient for serving static files.
 
 keepalive_timeout 65; 👉🏻 sets the timeout for keep-alive connections to 65 seconds.
+<br><br>
+
+3. Server Block
+```
+server {
+    listen 80;
+    server_name localhost;
+```
+listen 80; 👉🏻 tells Nginx to listen on port 80 for incoming HTTP requests.
+server_name localhost; 👉🏻 specifies that this server block will handle requests for localhost.
+
+```
+    location / {
+        root /var/www/html;
+        index index.html index.htm;
+    }
+}
+```
+`location / {}` defines how Nginx should handle requests to the root URL (/).
+
+`root /var/www/html;` sets the root directory for serving files. In this case, files will be served from /var/www/html.
+
+`index index.html index.htm;` specifies the default files to serve if a directory is requested. Nginx will look for index.html first, and if it doesn't find it, it will look for index.htm.
