@@ -47,15 +47,15 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
    `
    brew install nginx
    `
-   <br>
+   <br> <br>
   🖥 On Linux (Ubuntu/Debian): <br>
   `sudo apt update
    sudo apt install nginx
    `
-    <br>
+    <br> <br>
 🖥 On Windows: <br>
 Download the latest release from NGINX Official Site.
- <br>
+ <br> <br>
 2.2 Starting, Stopping, and Restarting NGINX <br>
   `
   sudo systemctl start nginx
@@ -63,4 +63,4 @@ Download the latest release from NGINX Official Site.
   sudo systemctl restart nginx
   sudo systemctl reload nginx  # Reload without downtime
   `
- <br>
+ <br> <br>
