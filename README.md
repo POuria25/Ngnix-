@@ -227,6 +227,11 @@ location /admin {
 }
 ```
 
+### Rate Limiting to Prevent DDoS
+```sh
+limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
+```
+
 ---
 
 ## 📌 11. Using NGINX in Cloud & Kubernetes
