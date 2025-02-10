@@ -11,6 +11,13 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
 
   NGINX was originally designed to solve the C10K problem, which refers to handling 10,000 concurrent connections efficiently. Traditional web servers like Apache use a thread-based   model, where each connection spawns a new thread, leading to high memory usage and CPU overhead. NGINX, however, is built around an event-driven model, allowing it to handle         thousands of concurrent connections efficiently with a small memory footprint.
 
+  
+  ✅ Performance – Handles more connections with fewer system resources.
+  ✅ Security – Acts as a proxy to protect backend servers.
+  ✅ Load Balancing – Distributes traffic among multiple servers.
+  ✅ Caching – Stores responses for faster delivery.
+  ✅ Reverse Proxy – Hides backend servers and forwards requests.
+
 3. Key Features of NGINX 🚀 
 
   Reverse Proxy: Acts as an intermediary between clients and backend servers. 
