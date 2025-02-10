@@ -13,9 +13,13 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
 
   
   ✅ Performance – Handles more connections with fewer system resources.
+  
   ✅ Security – Acts as a proxy to protect backend servers.
+  
   ✅ Load Balancing – Distributes traffic among multiple servers.
+  
   ✅ Caching – Stores responses for faster delivery.
+  
   ✅ Reverse Proxy – Hides backend servers and forwards requests.
 
 3. Key Features of NGINX 🚀 
