@@ -64,11 +64,11 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
  <br> <br>
 
   2.3 Exploring NGINX Directory Structure
-  
-  | Directory      | Purpose |
-  |----------------|---------|
-  | `/etc/nginx/nginx.conf`  | Main configuration file |
+  <br> <br>
+  | Directory                     | Purpose                 |
+  |-------------------------------|-------------------------|
+  | `/etc/nginx/nginx.conf`       | Main configuration file |
   | `/etc/nginx/sites-available/` | Available virtual hosts |
   | `/etc/nginx/sites-enabled/	` | Enabled virtual hosts   |
-  | `/var/log/nginx/access.log	` | Access logs   |
-  | `/var/log/nginx/error.log	 `  | Error logs   |
+  | `/var/log/nginx/access.log	` | Access logs             |
+  | `/var/log/nginx/error.log	 `  | Error logs              |
