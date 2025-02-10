@@ -34,12 +34,12 @@ NGINX was originally designed to solve the C10K problem, which refers to handlin
 ### 2.1 Installing NGINX
 
 #### 🖥 On macOS:
-```sh
+```nginx
 brew install nginx
 ```
 
 #### 🖥 On Linux (Ubuntu/Debian):
-```sh
+```nginx
 sudo apt update
 sudo apt install nginx
 ```
@@ -48,7 +48,7 @@ sudo apt install nginx
 Download the latest release from [NGINX Official Site](https://nginx.org/en/download.html).
 
 ### 2.2 Starting, Stopping, and Restarting NGINX
-```sh
+```nginx
 sudo systemctl start nginx  # Start NGINX
 sudo systemctl stop nginx   # Stop NGINX
 sudo systemctl restart nginx  # Restart NGINX
@@ -122,7 +122,7 @@ server {
 ```
 
 ### Setting MIME Types for CSS, JS, and Images
-```sh
+```nginx
 http {
     include mime.types;
     default_type application/octet-stream;
@@ -130,7 +130,7 @@ http {
 ```
 
 ### Handling Custom 404 Pages
-```sh
+```nginx
 server {
     error_page 404 /custom_404.html;
 }
@@ -243,7 +243,7 @@ location /admin {
 ```
 
 ### Rate Limiting to Prevent DDoS
-```sh
+```nginx
 limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 ```
 
@@ -253,7 +253,7 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
 ### Deploying NGINX in Kubernetes
 
-```sh
+```nginx
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -277,7 +277,7 @@ spec:
 
 ### Restricting Access
 
-```sh
+```nginx
 location /admin/ {
     deny all;
     allow 192.168.1.1;
@@ -287,7 +287,7 @@ location /admin/ {
 
 ### Rate Limiting to Prevent DDoS
 
-```sh
+```nginx
 limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
 ```
@@ -303,13 +303,13 @@ error_log /var/log/nginx/error.log debug;
 ```
 
 ### Check NGINX Configuration
-```sh
+```nginx
 nginx -V
 nginx -T
 ```
 
 ### Viewing Logs
-```sh
+```nginx
 tail -f /var/log/nginx/access.log
 
 ```
