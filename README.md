@@ -121,6 +121,21 @@ server {
 }
 ```
 
+### Setting MIME Types for CSS, JS, and Images
+```sh
+http {
+    include mime.types;
+    default_type application/octet-stream;
+}
+```
+
+### Handling Custom 404 Pages
+```sh
+server {
+    error_page 404 /custom_404.html;
+}
+
+```
 ### Optimizing Static File Serving
 Enable file compression and efficient file transfer:
 ```nginx
