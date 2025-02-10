@@ -511,10 +511,10 @@ server {
 
 ### 📌 Explanation:
 
-proxy_pass → Forwards WebSocket requests to the backend server.
-proxy_http_version 1.1 → Ensures WebSockets work properly.
-proxy_set_header Upgrade $http_upgrade; → Passes upgrade headers.
-proxy_set_header Connection "Upgrade"; → Maintains the WebSocket connection.
+- proxy_pass → Forwards WebSocket requests to the backend server.
+- proxy_http_version 1.1 → Ensures WebSockets work properly.
+- proxy_set_header Upgrade $http_upgrade; → Passes upgrade headers.
+- proxy_set_header Connection "Upgrade"; → Maintains the WebSocket connection.
 
 
 
