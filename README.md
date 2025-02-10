@@ -64,8 +64,10 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
 
   2.3 Exploring NGINX Directory Structure
   
-  | Name      | Age | City    |
-  |-----------|-----|---------|
-  | John Doe  | 30  | New York|
-  | Jane Smith| 25  | London  |
-  | Peter Jones| 40  | Paris   |
+  | Directory      | Purpose |
+  |----------------|---------|
+  | `/etc/nginx/nginx.conf`  | Main configuration file |
+  | `/etc/nginx/sites-available/` | Available virtual hosts |
+  | `/etc/nginx/sites-enabled/	` | Enabled virtual hosts   |
+  | `/var/log/nginx/access.log	` | Access logs   |
+  | `/var/log/nginx/error.log	 `  | Error logs   |
