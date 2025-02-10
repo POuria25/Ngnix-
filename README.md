@@ -129,8 +129,8 @@ http {
     keepalive_timeout 65;
 ```
 
-include mime.types; includes the MIME types file, which maps file extensions to MIME types (e.g., .html to text/html).
+include mime.types; 👉🏻 includes the MIME types file, which maps file extensions to MIME types (e.g., .html to text/html).
 
-sendfile on; enables the use of sendfile() system call, which is more efficient for serving static files.
+sendfile on; 👉🏻 enables the use of sendfile() system call, which is more efficient for serving static files.
 
-keepalive_timeout 65; sets the timeout for keep-alive connections to 65 seconds.
+keepalive_timeout 65; 👉🏻 sets the timeout for keep-alive connections to 65 seconds.
