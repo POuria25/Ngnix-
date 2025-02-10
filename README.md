@@ -42,7 +42,7 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
 
 📌 2. Installing and Running NGINX
 
-  2.1 Installing NGINX
+  2.1 Installing NGINX <br> <br>
   🖥 On macOS: <br>
    `
    brew install nginx
@@ -53,13 +53,14 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
    sudo apt install nginx
    `
     <br>
-🖥 On Windows:
+🖥 On Windows: <br>
 Download the latest release from NGINX Official Site.
-
-2.2 Starting, Stopping, and Restarting NGINX
+ <br>
+2.2 Starting, Stopping, and Restarting NGINX <br>
   `
   sudo systemctl start nginx
   sudo systemctl stop nginx
   sudo systemctl restart nginx
   sudo systemctl reload nginx  # Reload without downtime
   `
+ <br>
