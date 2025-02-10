@@ -69,11 +69,15 @@ sudo systemctl reload nginx  # Reload without downtime
 
 ## 📌 3. Understanding NGINX Configuration
 
-### 3.1 Directives and Contexts
+### 3.1 NGINX Directives and Contexts
 
-NGINX configuration consists of **directives** (key-value pairs) inside **contexts** (blocks of code).
+NGINX configuration consists of directives inside contexts. The main contexts are:
+- **events** – Defines worker processes and connection handling.
+- **http** – Contains settings for handling HTTP traffic.
+- **server** – Defines server behavior, including listening ports.
+- **location** – Specifies URL routing and request handling.
 
-#### Example: Basic NGINX Config
+### Example NGINX Configuration:
 ```nginx
 worker_processes auto;
 
@@ -98,86 +102,144 @@ http {
 }
 ```
 
-### Breakdown of the Configuration
-
-#### 1. **Global Configuration**
-```nginx
-worker_processes auto;
-```
-This sets the number of worker processes. `auto` means NGINX will automatically set it to the number of CPU cores available on the system.
-
-#### 2. **Events Block**
-```nginx
-events {
-    worker_connections 1024;
-}
-```
-`worker_connections` defines the maximum number of simultaneous connections each worker process can handle.
-
-#### 3. **HTTP Block**
-```nginx
-http {
-    include mime.types;
-    sendfile on;
-    keepalive_timeout 65;
-```
-- `include mime.types;` – Maps file extensions to MIME types.
-- `sendfile on;` – Enables `sendfile()` system call for efficient file serving.
-- `keepalive_timeout 65;` – Sets the timeout for keep-alive connections to 65 seconds.
-
-#### 4. **Server Block**
-```nginx
-server {
-    listen 80;
-    server_name localhost;
-```
-- `listen 80;` – NGINX listens for HTTP requests on port 80.
-- `server_name localhost;` – Specifies the domain name.
-
-#### 5. **Location Block**
-```nginx
-    location / {
-        root /var/www/html;
-        index index.html index.htm;
-    }
-}
-```
-- `location / {}` – Defines how NGINX handles requests to `/`.
-- `root /var/www/html;` – Specifies the document root for serving files.
-- `index index.html index.htm;` – Specifies default files to serve.
-
-This basic configuration enables NGINX to serve static files efficiently and handle multiple connections simultaneously.
-
 ---
 
 ## 📌 4. Serving Static Content with NGINX
 
-### 4.1 Configuring NGINX to Serve Static Files
+### Example Static File Server Configuration:
 ```nginx
 server {
     listen 80;
     server_name example.com;
-    root /var/www/html;
-    index index.html;
+
+    location / {
+        root /var/www/html;
+        index index.html;
+    }
+
+    error_page 404 /404.html;
 }
 ```
 
-### 4.2 Setting MIME Types for CSS, JS, and Images
+### Optimizing Static File Serving
+Enable file compression and efficient file transfer:
 ```nginx
-http {
-    include mime.types;
-    default_type application/octet-stream;
-}
+gzip on;
+sendfile on;
 ```
 
-### 4.3 Handling Custom 404 Pages
+---
+
+## 📌 5. Reverse Proxy with NGINX
+
+### Basic Reverse Proxy Setup
 ```nginx
 server {
-    error_page 404 /custom_404.html;
+    listen 80;
+    server_name example.com;
+
+    location / {
+        proxy_pass http://backend-server;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
 }
 ```
 
 ---
 
-This document is a **comprehensive guide** to understanding and using NGINX efficiently. Continue exploring to learn about **reverse proxy, caching, load balancing, security, logging, and deploying NGINX in Kubernetes!** 🚀
+## 📌 6. Load Balancing with NGINX
+
+### Round Robin Load Balancing
+```nginx
+upstream backend {
+    server backend1.example.com;
+    server backend2.example.com;
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://backend;
+    }
+}
+```
+
+---
+
+## 📌 7. Secure Connections (HTTPS & SSL Termination)
+
+### Enabling SSL
+```nginx
+server {
+    listen 443 ssl;
+    server_name example.com;
+
+    ssl_certificate /etc/nginx/ssl/server.crt;
+    ssl_certificate_key /etc/nginx/ssl/server.key;
+}
+```
+
+---
+
+## 📌 8. URL Routing, Rewrites, and Redirects
+
+### Redirecting HTTP to HTTPS
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+    return 301 https://$host$request_uri;
+}
+```
+
+### URL Rewrite
+```nginx
+server {
+    rewrite ^/old/(.*)$ /new/$1 redirect;
+}
+```
+
+---
+
+## 📌 9. Caching and Performance Optimization
+
+### Enable Proxy Caching
+```nginx
+proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=mycache:10m inactive=60m;
+```
+
+### Enable Gzip Compression
+```nginx
+gzip on;
+gzip_types text/plain text/css application/json;
+```
+
+---
+
+## 📌 10. Security and Access Control
+
+### Block Unauthorized Access
+```nginx
+location /admin {
+    deny all;
+}
+```
+
+---
+
+## 📌 11. Debugging and Logging
+
+### Enable Debugging Logs
+```nginx
+error_log /var/log/nginx/error.log debug;
+```
+
+### Check NGINX Configuration
+```sh
+nginx -T
+```
+
+This README now includes detailed explanations and relevant code snippets for each section. 🚀
 
