@@ -1,6 +1,6 @@
 # Nginx
 
-## 👉 1. Introduction
+## 📌 1. Introduction
 
 NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, load balancer, and caching system. It is widely used for handling concurrent connections efficiently due to its asynchronous, event-driven architecture.
 
@@ -8,16 +8,14 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
 
 NGINX was originally designed to solve the C10K problem, which refers to handling 10,000 concurrent connections efficiently. Traditional web servers like Apache use a thread-based model, where each connection spawns a new thread, leading to high memory usage and CPU overhead. NGINX, however, is built around an event-driven model, allowing it to handle thousands of concurrent connections efficiently with a small memory footprint.
 
-**Key Advantages:**
+#### ✅ Key Advantages of NGINX:
+- **Performance** – Handles more connections with fewer system resources.
+- **Security** – Acts as a proxy to protect backend servers.
+- **Load Balancing** – Distributes traffic among multiple servers.
+- **Caching** – Stores responses for faster delivery.
+- **Reverse Proxy** – Hides backend servers and forwards requests.
 
-- 💡 **Performance** – Handles more connections with fewer system resources.
-- 💪 **Security** – Acts as a proxy to protect backend servers.
-- 🎯 **Load Balancing** – Distributes traffic among multiple servers.
-- ⏳ **Caching** – Stores responses for faster delivery.
-- 👀 **Reverse Proxy** – Hides backend servers and forwards requests.
-
-### Key Features of NGINX 🚀
-
+### 🚀 Key Features of NGINX
 - **Reverse Proxy**: Acts as an intermediary between clients and backend servers.
 - **Load Balancer**: Distributes incoming traffic across multiple backend servers.
 - **Static Content Server**: Efficiently serves static files like HTML, CSS, and JavaScript.
@@ -27,33 +25,33 @@ NGINX was originally designed to solve the C10K problem, which refers to handlin
 - **Compression & Streaming**: Optimizes bandwidth usage and improves page load speed.
 - **Kubernetes Ingress Controller**: Manages external access to services in Kubernetes clusters.
 
-💡 **Example**: When you visit Airbnb, NGINX acts as a reverse proxy between your browser and the backend servers.
+### 💡 Example: When you visit Airbnb, NGINX acts as a reverse proxy between your browser and the backend servers.
 
 ---
 
-## 👉 2. Installing and Running NGINX
+## 📌 2. Installing and Running NGINX
 
 ### 2.1 Installing NGINX
 
-**On macOS:**
+#### 🖥 On macOS:
 ```sh
 brew install nginx
 ```
 
-**On Linux (Ubuntu/Debian):**
+#### 🖥 On Linux (Ubuntu/Debian):
 ```sh
 sudo apt update
 sudo apt install nginx
 ```
 
-**On Windows:**
+#### 🖥 On Windows:
 Download the latest release from [NGINX Official Site](https://nginx.org/en/download.html).
 
 ### 2.2 Starting, Stopping, and Restarting NGINX
 ```sh
-sudo systemctl start nginx
-sudo systemctl stop nginx
-sudo systemctl restart nginx
+sudo systemctl start nginx  # Start NGINX
+sudo systemctl stop nginx   # Stop NGINX
+sudo systemctl restart nginx  # Restart NGINX
 sudo systemctl reload nginx  # Reload without downtime
 ```
 
@@ -69,27 +67,27 @@ sudo systemctl reload nginx  # Reload without downtime
 
 ---
 
-## 👉 3. Understanding NGINX Configuration
+## 📌 3. Understanding NGINX Configuration
 
 ### 3.1 Directives and Contexts
+
 NGINX configuration consists of **directives** (key-value pairs) inside **contexts** (blocks of code).
 
 #### Example: Basic NGINX Config
-
 ```nginx
-worker_processes auto;   # Number of worker processes, auto means CPU core count
+worker_processes auto;
 
 events {
-    worker_connections 1024;  # Max connections per worker
+    worker_connections 1024;
 }
 
 http {
-    include mime.types;  # MIME type mapping
-    sendfile on;  # Optimize file serving
+    include mime.types;
+    sendfile on;
     keepalive_timeout 65;
 
     server {
-        listen 80;  # Listen on port 80
+        listen 80;
         server_name localhost;
 
         location / {
@@ -100,41 +98,43 @@ http {
 }
 ```
 
-### Breakdown of Key Sections:
+### Breakdown of the Configuration
 
 #### 1. **Global Configuration**
 ```nginx
 worker_processes auto;
 ```
-- Sets the number of worker processes. `auto` means Nginx will automatically set it to the number of CPU cores available on the system.
+This sets the number of worker processes. `auto` means NGINX will automatically set it to the number of CPU cores available on the system.
 
+#### 2. **Events Block**
 ```nginx
 events {
     worker_connections 1024;
 }
 ```
-- `worker_connections` defines the maximum number of simultaneous connections each worker process can handle.
+`worker_connections` defines the maximum number of simultaneous connections each worker process can handle.
 
-#### 2. **HTTP Block**
+#### 3. **HTTP Block**
 ```nginx
 http {
     include mime.types;
     sendfile on;
     keepalive_timeout 65;
 ```
-- `include mime.types;` 💡 Includes the MIME types file, mapping file extensions to MIME types (e.g., .html to text/html).
-- `sendfile on;` 💡 Enables the `sendfile()` system call for efficient file serving.
-- `keepalive_timeout 65;` 💡 Sets the timeout for keep-alive connections to 65 seconds.
+- `include mime.types;` – Maps file extensions to MIME types.
+- `sendfile on;` – Enables `sendfile()` system call for efficient file serving.
+- `keepalive_timeout 65;` – Sets the timeout for keep-alive connections to 65 seconds.
 
-#### 3. **Server Block**
+#### 4. **Server Block**
 ```nginx
 server {
     listen 80;
     server_name localhost;
 ```
-- `listen 80;` 💡 Tells NGINX to listen on port 80 for incoming HTTP requests.
-- `server_name localhost;` 💡 Specifies that this server block will handle requests for localhost.
+- `listen 80;` – NGINX listens for HTTP requests on port 80.
+- `server_name localhost;` – Specifies the domain name.
 
+#### 5. **Location Block**
 ```nginx
     location / {
         root /var/www/html;
@@ -142,27 +142,42 @@ server {
     }
 }
 ```
-- `location / {}` 💡 Defines how NGINX should handle requests to the root URL (`/`).
-- `root /var/www/html;` 💡 Sets the root directory for serving files.
-- `index index.html index.htm;` 💡 Specifies the default files to serve.
+- `location / {}` – Defines how NGINX handles requests to `/`.
+- `root /var/www/html;` – Specifies the document root for serving files.
+- `index index.html index.htm;` – Specifies default files to serve.
 
-### Summary:
-- This configuration sets up NGINX to serve static files from `/var/www/html` on port 80.
-- Uses the number of CPU cores for worker processes and allows each worker to handle up to 1024 connections.
-- The `sendfile` directive is enabled for efficient file serving.
-- Keep-alive connections are set to timeout after 65 seconds.
+This basic configuration enables NGINX to serve static files efficiently and handle multiple connections simultaneously.
 
 ---
 
-## 👉 More Advanced Topics (Coming Soon)
+## 📌 4. Serving Static Content with NGINX
 
-- 💡 **Serving Static Content**
-- 💡 **Reverse Proxy & Load Balancing**
-- 💡 **SSL/TLS Encryption (HTTPS Setup)**
-- 💡 **Security Best Practices**
-- 💡 **NGINX with Kubernetes (Ingress Controller)**
-- 💡 **Caching & Performance Optimization**
-- 💡 **Monitoring & Debugging NGINX Logs**
+### 4.1 Configuring NGINX to Serve Static Files
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+    root /var/www/html;
+    index index.html;
+}
+```
 
-Stay tuned for more updates! 🚀🔥
+### 4.2 Setting MIME Types for CSS, JS, and Images
+```nginx
+http {
+    include mime.types;
+    default_type application/octet-stream;
+}
+```
+
+### 4.3 Handling Custom 404 Pages
+```nginx
+server {
+    error_page 404 /custom_404.html;
+}
+```
+
+---
+
+This document is a **comprehensive guide** to understanding and using NGINX efficiently. Continue exploring to learn about **reverse proxy, caching, load balancing, security, logging, and deploying NGINX in Kubernetes!** 🚀
 
