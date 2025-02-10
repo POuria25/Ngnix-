@@ -614,3 +614,30 @@ socket.onclose = function() {
 ```
 
 
+## 📌 17. Rate Limiting and DDoS Protection
+
+### 🔹 Why Use Rate Limiting?
+Rate limiting is essential to prevent **brute force attacks, API abuse, and DDoS attacks**. NGINX allows **limiting requests per IP, per second, or based on specific zones**.
+
+---
+
+### 🔹 Basic Rate Limiting Example
+
+You can **limit requests per second** using `limit_req_zone` and apply it to a specific location.
+
+```nginx
+http {
+    # Define a shared memory zone named "api_zone" with a 10MB limit
+    limit_req_zone $binary_remote_addr zone=api_zone:10m rate=10r/s;
+
+    server {
+        listen 80;
+        server_name example.com;
+
+        location /api/ {
+            limit_req zone=api_zone burst=20 nodelay;
+        }
+    }
+}
+```
+
