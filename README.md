@@ -81,3 +81,26 @@ NGINX (pronounced "engine-x") is a high-performance web server, reverse proxy, l
   NGINX configuration consists of directives (key-value pairs) inside contexts (blocks of code).<br><br>
   Example: Basic NGINX Config
 
+
+ ```
+ worker_processes auto;   # Number of worker processes, auto means CPU core count
+events {
+    worker_connections 1024;  # Max connections per worker
+}
+
+http {
+    include mime.types;  # MIME type mapping
+    sendfile on;  # Optimize file serving
+    keepalive_timeout 65;
+
+    server {
+        listen 80;  # Listen on port 80
+        server_name localhost;
+
+        location / {
+            root /var/www/html;
+            index index.html index.htm;
+        }
+    }
+}
+```
