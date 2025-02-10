@@ -518,9 +518,99 @@ server {
 
 
 
+### ⚙️ Secure WebSockets with SSL
+To ensure secure WebSocket connections (wss:// instead of ws://), configure SSL termination:
 
+```nginx
+server {
+    listen 443 ssl;
+    server_name example.com;
 
+    ssl_certificate /etc/nginx/ssl/server.crt;
+    ssl_certificate_key /etc/nginx/ssl/server.key;
 
+    location /ws/ {
+        proxy_pass http://backend_server;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+}
+```
+### 📌 Explanation:
 
+ - listen 443 ssl; → Enables SSL on port 443.
+ - ssl_certificate → Path to SSL certificate.
+ - ssl_certificate_key → Path to SSL key.
+ - The rest remains the same as the basic WebSocket proxy.
+
+## ⚙️ Load Balancing WebSockets
+If you need to scale WebSockets across multiple backend servers, configure NGINX as a WebSocket load balancer:
+
+```nginx
+upstream websocket_backend {
+    server backend1.example.com;
+    server backend2.example.com;
+}
+
+server {
+    listen 80;
+    server_name example.com;
+
+    location /ws/ {
+        proxy_pass http://websocket_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+}
+```
+### 📌 Explanation:
+
+ - upstream websocket_backend → Defines multiple WebSocket backend servers.
+ - proxy_pass http://websocket_backend; → Sends requests to the least busy backend.
+
+## ⚙️ Handling WebSocket Timeouts
+Since WebSockets remain open for extended periods, default timeout settings may close connections. Increase timeouts to prevent premature disconnections:
+
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+
+    location /ws/ {
+        proxy_pass http://backend_server;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_read_timeout 3600s;  # Allow connections to stay open for 1 hour
+    }
+}
+```
+
+### 📌 Explanation:
+
+ - proxy_read_timeout 3600s; → Keeps the WebSocket connection open for 1 hour.
+
+## 🛠 Testing WebSocket Connection
+To verify WebSocket support, use a simple JavaScript WebSocket client:
+
+```nginx
+const socket = new WebSocket("ws://example.com/ws/");
+
+socket.onopen = function() {
+    console.log("WebSocket connected!");
+    socket.send("Hello, Server!");
+};
+
+socket.onmessage = function(event) {
+    console.log("Received:", event.data);
+};
+
+socket.onclose = function() {
+    console.log("WebSocket connection closed.");
+};
+
+```
 
 
