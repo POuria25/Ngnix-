@@ -229,7 +229,53 @@ location /admin {
 
 ---
 
-## 📌 11. Debugging and Logging
+## 📌 11. Using NGINX in Cloud & Kubernetes
+
+### Deploying NGINX in Kubernetes
+
+```sh
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          service:
+            name: my-service
+            port:
+              number: 80
+
+```
+---
+
+## 📌 10. Security and Access Control
+
+### Restricting Access
+
+```sh
+location /admin/ {
+    deny all;
+    allow 192.168.1.1;
+}
+
+```
+
+### Rate Limiting to Prevent DDoS
+
+```sh
+limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
+
+```
+
+
+---
+
+## 📌 12. Debugging and Logging
 
 ### Enable Debugging Logs
 ```nginx
