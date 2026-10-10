@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nginx Cheatsheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<style>
+  :root {
+    --bg:#f6f7fb; --surface:#ffffff; --border:#dfe3ec; --accent:#0a7d6b;
+    --accent2:#d64550; --accent3:#9a6700; --text:#2b3245; --muted:#6b7490; --code-bg:#f1f3f9;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Syne',sans-serif; min-height:100vh; padding:48px 24px; }
+  header { max-width:960px; margin:0 auto 32px; border-left:3px solid var(--accent); padding-left:20px; }
+  header .tag { font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:10px; }
+  header h1 { font-size:clamp(28px,5vw,48px); font-weight:800; color:#111827; line-height:1.1; }
+  header p { margin-top:10px; color:var(--muted); font-size:14px; font-family:'Share Tech Mono',monospace; }
+  .intro { max-width:960px; margin:0 auto 24px; font-size:13px; line-height:1.75; }
+  .intro p { margin-bottom:10px; }
+  .tools { max-width:960px; margin:0 auto 20px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .tools input { flex:1; min-width:220px; background:var(--surface); border:1px solid var(--border); color:var(--text);
+    font-family:'Share Tech Mono',monospace; font-size:12px; padding:10px 14px; border-radius:4px; outline:none; }
+  .tools input:focus { border-color:var(--accent); }
+  .tools button { font-family:'Share Tech Mono',monospace; font-size:11px; padding:9px 14px; border:1px solid var(--border);
+    background:var(--surface); color:var(--accent3); cursor:pointer; border-radius:4px; letter-spacing:1px; text-transform:uppercase; }
+  .tools button:hover { border-color:var(--accent3); }
+  .toc { max-width:960px; margin:0 auto 8px; display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { font-family:'Share Tech Mono',monospace; font-size:10px; padding:4px 10px; border-radius:20px; background:#ffffff;
+    border:1px solid var(--border); color:var(--muted); letter-spacing:1px; text-decoration:none; }
+  .pill:hover { background:#0a7d6b14; border-color:#0a7d6b66; color:var(--accent); }
+  .section-title { max-width:960px; margin:48px auto 20px; font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--accent);
+    letter-spacing:4px; text-transform:uppercase; padding-left:4px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+  .grid { max-width:960px; margin:0 auto; display:flex; flex-direction:column; gap:24px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:4px; overflow:hidden; scroll-margin-top:16px; }
+  .card.hidden { display:none; }
+  .card-header { display:flex; align-items:center; gap:14px; padding:18px 24px; border-bottom:1px solid var(--border); cursor:pointer; user-select:none; transition:background .15s; }
+  .card-header:hover { background:#f1f4fa; }
+  .num { font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--muted); min-width:28px; }
+  .badge { font-family:'Share Tech Mono',monospace; font-size:10px; padding:3px 8px; border-radius:2px; font-weight:700; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; }
+  .badge-basics     { background:#e6f6ec; color:#15803d; border:1px solid #b7e4c7; }
+  .badge-production { background:#e8f0fd; color:#1d4ed8; border:1px solid #bfd3f7; }
+  .badge-reference  { background:#fdeaec; color:#b91c1c; border:1px solid #f5c2c7; }
+  .card-header h2 { font-size:16px; font-weight:700; color:#111827; flex:1; }
+  .toggle-icon { font-family:'Share Tech Mono',monospace; color:var(--muted); font-size:18px; transition:transform .2s; min-width:16px; text-align:center; }
+  .card.open .toggle-icon { transform:rotate(45deg); }
+  .card-body { display:none; padding:24px; font-size:13px; line-height:1.75; }
+  .card.open .card-body { display:block; }
+  .card-body p { margin-bottom:12px; }
+  .card-body ul, .card-body ol { margin:0 0 14px 22px; }
+  .card-body li { margin-bottom:4px; }
+  .card-body a { color:var(--accent); }
+  .description { margin-bottom:20px; padding:14px 16px; background:#eef6f4; border-left:3px solid var(--accent); border-radius:0 4px 4px 0; }
+  code { font-family:'Share Tech Mono',monospace; background:#eceff6; padding:1px 5px; border-radius:3px; font-size:12px; color:var(--accent3); }
+  .section-label { font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:2px; text-transform:uppercase; margin:26px 0 10px; }
+  .section-label.sub { color:var(--muted); font-size:10px; }
+  .section-label:first-child { margin-top:0; }
+  .code-wrap { position:relative; margin-bottom:14px; }
+  pre { background:var(--code-bg); border:1px solid var(--border); border-radius:4px; padding:18px; overflow-x:auto;
+    font-family:'Share Tech Mono',monospace; font-size:12px; line-height:1.75; color:#1f2937; white-space:pre; }
+  pre code { background:none; padding:0; color:inherit; font-size:inherit; }
+  pre code.hljs { background:none; padding:0; }
+  .copy { position:absolute; top:8px; right:10px; font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--muted); background:var(--surface); border:1px solid var(--border); padding:3px 8px; border-radius:3px; cursor:pointer; }
+  .copy:hover { color:var(--accent); border-color:var(--accent); }
+  .table-wrap { overflow-x:auto; margin-bottom:16px; }
+  table { border-collapse:collapse; width:100%; font-size:12px; }
+  th { font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--accent3); text-align:left; }
+  th, td { border:1px solid var(--border); padding:8px 12px; vertical-align:top; }
+  tr:nth-child(even) td { background:#f6f8fc; }
+  footer { max-width:960px; margin:56px auto 0; text-align:center; font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--muted); border-top:1px solid var(--border); padding-top:24px; }
+  @media (max-width:600px) { .card-header { flex-wrap:wrap; } .badge { display:none; } body { padding:24px 12px; } }
+  #status { max-width:960px; margin:24px auto; font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--accent3); }
+  #status label { display:inline-block; margin-top:10px; padding:8px 14px; border:1px solid var(--border); border-radius:4px; cursor:pointer; color:var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tag">// nginx</div>
+  <h1>Nginx<br>Cheatsheet</h1>
+  <p id="sub">// web server · reverse proxy · load balancer · TLS · Docker</p>
+</header>
+
+<div class="intro" id="intro"></div>
+<div id="status">Loading README.md …</div>
+
+<div class="tools">
+  <input id="q" type="search" placeholder="search commands, directives, errors... (e.g. proxy_pass, 502, certbot)">
+  <button onclick="setAll(true)">Expand all</button>
+  <button onclick="setAll(false)">Collapse all</button>
+</div>
+<div class="toc" id="toc"></div>
+<div id="content"></div>
+
+<footer>Made by Pouria</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+const MD_FILE = 'README.md';   // the Markdown file next to this page
+const GROUPS = [
+  [1, 9,  'Part 1 \u2014 Core Nginx (from the three tutorials)', 'basics'],
+  [10, 19, 'Part 2 \u2014 In Depth & Production', 'production'],
+  [20, 999, 'Reference \u2014 Cheat Sheet & Exam Questions', 'reference'],
+];
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function toggle(h) { h.parentElement.classList.toggle('open'); }
+function openCard(id) { const c = document.getElementById(id); if (c) c.classList.add('open'); }
+function setAll(open) { document.querySelectorAll('.card:not(.hidden)').forEach(c => c.classList.toggle('open', open)); }
+
+function render(md) {
+  document.getElementById('status')?.remove();
+  // split on "## " headings that are outside code fences
+  const lines = md.split('\n'); let fence = false, introLines = [], secs = [], cur = null;
+  for (const l of lines) {
+    if (/^\s*(```|~~~)/.test(l)) fence = !fence;
+    if (!fence && /^## /.test(l)) { cur = {title: l.slice(3).trim(), body: []}; secs.push(cur); continue; }
+    (cur ? cur.body : introLines).push(l);
+  }
+  document.getElementById('intro').innerHTML = marked.parse(introLines.join('\n').replace(/^# .*$/m, ''));
+  const toc = [], out = []; let curGroup = null;
+  secs.forEach(s => {
+    const m = s.title.match(/^(\d+)\.\s*(.*)$/);
+    const num = m ? +m[1] : 0, title = m ? m[2] : s.title, id = 's' + num;
+    const g = GROUPS.find(g => num >= g[0] && num <= g[1]) || GROUPS[2];
+    if (g !== curGroup) {
+      if (curGroup) out.push('</div>');
+      out.push('<div class="section-title">// ' + esc(g[2]) + '</div><div class="grid">'); curGroup = g;
+    }
+    const raw = s.body.join('\n');
+    const tmp = document.createElement('div');
+    tmp.innerHTML = marked.parse(raw.replace(/^### (.*)$/gm, (a, t) => '\n<div class="section-label">// ' + esc(t) + '</div>\n').replace(/^#### (.*)$/gm, (a, t) => '\n<div class="section-label sub">' + esc(t) + '</div>\n'));
+    tmp.querySelectorAll('table').forEach(t => { const w = document.createElement('div'); w.className = 'table-wrap'; t.replaceWith(w); w.appendChild(t); });
+    const first = tmp.firstElementChild;
+    if (first && first.tagName === 'P') { first.className = 'description'; }
+    out.push('<div class="card" id="' + id + '" data-text="' + esc((s.title + ' ' + raw).toLowerCase()) + '">' +
+      '<div class="card-header" onclick="toggle(this)"><span class="num">' + String(num).padStart(2, '0') + '</span><h2>' + esc(title) + '</h2>' +
+      '<span class="badge badge-' + g[3] + '">' + g[3] + '</span><span class="toggle-icon">+</span></div>' +
+      '<div class="card-body">' + tmp.innerHTML + '</div></div>');
+    toc.push('<a class="pill" href="#' + id + '" onclick="openCard(\'' + id + '\')">' + String(num).padStart(2, '0') + ' ' + esc(title) + '</a>');
+  });
+  if (curGroup) out.push('</div>');
+  document.getElementById('content').innerHTML = out.join('');
+  document.getElementById('toc').innerHTML = toc.join('');
+  document.getElementById('sub').textContent = '// ' + secs.length + ' sections \u00b7 web server \u00b7 reverse proxy \u00b7 load balancer \u00b7 TLS \u00b7 Docker';
+  document.querySelectorAll('pre').forEach(pre => {
+    const code = pre.querySelector('code'); if (code) hljs.highlightElement(code);
+    const wrap = document.createElement('div'); wrap.className = 'code-wrap';
+    pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
+    const b = document.createElement('button'); b.className = 'copy'; b.textContent = 'copy';
+    b.onclick = () => navigator.clipboard.writeText(pre.innerText).then(() => { b.textContent = 'copied'; setTimeout(() => b.textContent = 'copy', 1200); });
+    wrap.appendChild(b);
+  });
+  const h = location.hash.slice(1);
+  (document.getElementById(h) || document.querySelector('.card'))?.classList.add('open');
+  if (h) document.getElementById(h)?.scrollIntoView();
+}
+
+document.getElementById('q').addEventListener('input', e => {
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('.card').forEach(c => {
+    const hit = !q || c.dataset.text.includes(q);
+    c.classList.toggle('hidden', !hit);
+    if (q && hit) c.classList.add('open');
+  });
+});
+
+fetch(MD_FILE).then(r => { if (!r.ok) throw new Error(r.status); return r.text(); }).then(render).catch(() => {
+  const st = document.getElementById('status'); if (!st) return;
+  st.innerHTML = 'Could not load ' + MD_FILE + ' (opened from disk, or the file is missing). Pick it manually:<br><label>Choose README.md<input type="file" accept=".md,text/markdown,text/plain" hidden onchange="this.files[0].text().then(render)"></label>';
+});
+</script>
+</body>
+</html>
